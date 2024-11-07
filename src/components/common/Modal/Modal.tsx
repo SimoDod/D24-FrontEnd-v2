@@ -13,7 +13,7 @@ type Props = {
 }
 const Modal = ({ onClose, title, children, actions }: Props) =>
   createPortal(
-    <div className="modal modal-open">
+    <div className="modal modal-open z-40">
       <div className="modal-box max-w-fit xxs:w-full xxxs:w-full">
         <div className="flex justify-between h-8">
           <h3 className="font-bold text-lg">{title}</h3>

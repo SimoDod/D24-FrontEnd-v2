@@ -12,10 +12,24 @@ import { createOfficeThunk } from "../thunks/maintenance/createOfficeThunk";
 import { updateOfficeNameThunk } from "../thunks/maintenance/updateOfficeNameThunk";
 import { deleteOfficeThunk } from "../thunks/maintenance/deleteOfficeThunk";
 
+type NotificationState = {
+  message: string;
+};
+
+const initialState: NotificationState = {
+  message: "",
+};
+
+//TODO translate
+
 const notificationSlice = createSlice({
   name: "notification",
-  initialState: {},
-  reducers: {},
+  initialState,
+  reducers: {
+    clearMessage(state) {
+      state.message = "";
+    },
+  },
   extraReducers: ({ addMatcher }) => {
     addMatcher(
       isAnyOf(
@@ -32,10 +46,12 @@ const notificationSlice = createSlice({
         updateOfficeNameThunk.rejected,
         deleteOfficeThunk.rejected
       ),
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      (_, _action) => {}
+      (state, action) => {
+        state.message = action.payload || "An unknown error occurred";
+      }
     );
   },
 });
 
+export const { clearMessage } = notificationSlice.actions;
 export default notificationSlice.reducer;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { api } from "../../../api/api";
@@ -15,11 +16,12 @@ export const postReportThunk = createAsyncThunk<
 
     const method = isUpdate ? "put" : "post";
     const url = `/learning-report/${isUpdate ? reportId : "submit"}`;
+    const { _id, ...valuesWithoutId } = valuesWithUpdatedStatus;
 
     const response = await api({
       method,
       url,
-      data: valuesWithUpdatedStatus,
+      data: isUpdate ? valuesWithUpdatedStatus : valuesWithoutId,
     });
 
     return response?.data;
